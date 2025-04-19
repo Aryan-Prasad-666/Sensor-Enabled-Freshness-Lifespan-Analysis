@@ -2,8 +2,8 @@ Rotten food is a serious issue in the food supply chain. Using gas sensors (MQ s
 
 The model is trained to predict how many hours are left before the banana becomes rotten, helping vendors or consumers take proactive actions.
 
-<p float="left">
-  <img src="https://github.com/user-attachments/assets/056b7338-2832-498f-968c-d19034b00bbd" width="300"/>
+<p style="display: inline-block;">
+  <img src="https://github.com/user-attachments/assets/056b7338-2832-498f-968c-d19034b00bbd" width="300" style="margin-right: 20px;"/>
   <img src="https://github.com/user-attachments/assets/b0697af4-b4c3-46aa-8d6f-fe99c427bb83" width="300"/>
 </p>
 
