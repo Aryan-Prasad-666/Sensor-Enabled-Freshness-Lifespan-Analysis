@@ -1,1 +1,17 @@
 *.csv
+test.py
+test1.py
+test2.py
+test3.py
+test4.py
+.ipynb_checkpoints
+.vscode
+.venv
+main1.py
+test5.py
+testnew1.py
+testnew2.py
+testnew3.py
+testnew4.py
+testnew5.py
+Untitled.ipynb
