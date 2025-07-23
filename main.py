@@ -21,6 +21,9 @@ df1 = pd.read_csv(r"Banana2_with_rot_hours.csv")
 df2 = pd.read_csv(r"Banana3_with_rot_hours.csv")
 df3 = pd.read_csv(r"Banana4_with_rot_hours.csv")
 df4 = pd.read_csv(r"Banana5_with_rot_hours.csv")
+df5 = pd.read_csv(r"Banana5_with_rot_hours.csv")
+df6 = pd.read_csv(r"Banana5_with_rot_hours.csv")
+df7 = pd.read_csv(r"Banana5_with_rot_hours.csv")
 
 def fill_nan_values(df):
     df_filled = df.copy()
