@@ -21,9 +21,9 @@ df1 = pd.read_csv(r"Banana2_with_rot_hours.csv")
 df2 = pd.read_csv(r"Banana3_with_rot_hours.csv")
 df3 = pd.read_csv(r"Banana4_with_rot_hours.csv")
 df4 = pd.read_csv(r"Banana5_with_rot_hours.csv")
-df5 = pd.read_csv(r"Banana5_with_rot_hours.csv")
-df6 = pd.read_csv(r"Banana5_with_rot_hours.csv")
-df7 = pd.read_csv(r"Banana5_with_rot_hours.csv")
+df5 = pd.read_csv(r"Banana6_with_rot_hours.csv")
+df6 = pd.read_csv(r"Banana7_with_rot_hours.csv")
+df7 = pd.read_csv(r"Banana8_with_rot_hours.csv")
 
 def fill_nan_values(df):
     df_filled = df.copy()
@@ -59,6 +59,9 @@ plot_sensor_readings(df1,"Banana2")
 plot_sensor_readings(df2,"Banana3")
 plot_sensor_readings(df3, "Banana4")
 plot_sensor_readings(df4, "Banana5")
+plot_sensor_readings(df5, "Banana6")
+plot_sensor_readings(df6, "Banana7")
+plot_sensor_readings(df7, "Banana8")
 
 def create_advanced_features(df):
     df_base = df.copy()
