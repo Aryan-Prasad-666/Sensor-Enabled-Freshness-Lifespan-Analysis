@@ -13,7 +13,7 @@ from math import sqrt
 from sklearn.feature_selection import SelectFromModel
 
 sns.set_style("whitegrid")
-plt.rcParams['figure.figsize'] = (10, 6)
+plt.rcParams['figure.figsize'] = (10, 6) 
 plt.rcParams['font.size'] = 12
 
 df0 = pd.read_csv(r"Banana1_with_rot_hours.csv")
@@ -24,7 +24,7 @@ df4 = pd.read_csv(r"Banana5_with_rot_hours.csv")
 df5 = pd.read_csv(r"Banana6_with_rot_hours.csv")
 df6 = pd.read_csv(r"Banana7_with_rot_hours.csv")
 df7 = pd.read_csv(r"Banana8_with_rot_hours.csv")
-df8 = pd.read_csv(r"Banana9_with_rot_hours.csv") 
+df8 = pd.read_csv(r"Banana9_with_rot_hours.csv")
 
 def fill_nan_values(df):
     df_filled = df.copy()
@@ -43,7 +43,7 @@ df4 = fill_nan_values(df4)
 df5 = fill_nan_values(df5)
 df6 = fill_nan_values(df6)
 df7 = fill_nan_values(df7)
-df8 = fill_nan_values(df8)  
+df8 = fill_nan_values(df8)
 
 def plot_sensor_readings(df, banana_name):
     sensors = ['MQ2', 'MQ3', 'MQ4', 'MQ5', 'MQ9', 'MQ135']
@@ -67,7 +67,7 @@ plot_sensor_readings(df4, "Banana5")
 plot_sensor_readings(df5, "Banana6")
 plot_sensor_readings(df6, "Banana7")
 plot_sensor_readings(df7, "Banana8")
-plot_sensor_readings(df8, "Banana9") 
+plot_sensor_readings(df8, "Banana9")
 
 def create_advanced_features(df):
     df_base = df.copy()
@@ -120,8 +120,14 @@ def create_advanced_features(df):
     df_processed = df_processed.dropna()
     return df_processed
 
+def remove_highly_correlated_features(df, threshold=0.9):
+    corr_matrix = df.corr().abs()
+    upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
+    to_drop = [column for column in upper.columns if any(upper[column] > threshold)]
+    return df.drop(columns=to_drop), to_drop
+
 banana_datasets_fe = []
-for df in [df0, df1, df2, df3, df4, df5, df6, df7, df8]: 
+for df in [df0, df1, df2, df3, df4, df5, df6, df7, df8]:
     banana_datasets_fe.append(create_advanced_features(df))
 
 banana_datasets = banana_datasets_fe
@@ -188,7 +194,12 @@ selected_feature_indices = sfm.get_support(indices=True)
 selected_features_names = X_all.columns[selected_feature_indices].tolist()
 
 print(f"Selected features after RandomForest selection: {len(selected_features_names)}")
-features = selected_features_names
+
+X_selected = X_all[selected_features_names]
+X_filtered, dropped_cols = remove_highly_correlated_features(X_selected, threshold=0.9)
+
+print("Dropped due to high correlation:", dropped_cols)
+features = list(X_filtered.columns)
 
 for model_name, model in models.items():
     
@@ -276,7 +287,7 @@ for model_name, model in models.items():
         plt.tight_layout()
         plt.show()
 
-        if model_name in ['XGBoost', 'Gradient Boosting', 'Random Forest']:  
+        if model_name in ['XGBoost', 'Gradient Boosting', 'Random Forest']:
             if hasattr(pipeline.named_steps['regressor'], 'feature_importances_'):
                 model_feature_importances = pipeline.named_steps['regressor'].feature_importances_
                 
