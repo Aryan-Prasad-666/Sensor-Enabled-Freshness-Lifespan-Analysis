@@ -13,7 +13,7 @@ from math import sqrt
 from sklearn.feature_selection import SelectFromModel
 
 sns.set_style("whitegrid")
-plt.rcParams['figure.figsize'] = (10, 6) 
+plt.rcParams['figure.figsize'] = (10, 6)
 plt.rcParams['font.size'] = 12
 
 df0 = pd.read_csv(r"Banana1_with_rot_hours.csv")
@@ -24,6 +24,7 @@ df4 = pd.read_csv(r"Banana5_with_rot_hours.csv")
 df5 = pd.read_csv(r"Banana6_with_rot_hours.csv")
 df6 = pd.read_csv(r"Banana7_with_rot_hours.csv")
 df7 = pd.read_csv(r"Banana8_with_rot_hours.csv")
+df8 = pd.read_csv(r"Banana9_with_rot_hours.csv") 
 
 def fill_nan_values(df):
     df_filled = df.copy()
@@ -39,6 +40,10 @@ df1 = fill_nan_values(df1)
 df2 = fill_nan_values(df2)
 df3 = fill_nan_values(df3)
 df4 = fill_nan_values(df4)
+df5 = fill_nan_values(df5)
+df6 = fill_nan_values(df6)
+df7 = fill_nan_values(df7)
+df8 = fill_nan_values(df8)  
 
 def plot_sensor_readings(df, banana_name):
     sensors = ['MQ2', 'MQ3', 'MQ4', 'MQ5', 'MQ9', 'MQ135']
@@ -55,13 +60,14 @@ def plot_sensor_readings(df, banana_name):
     plt.show()
 
 plot_sensor_readings(df0, "Banana1")
-plot_sensor_readings(df1,"Banana2")
-plot_sensor_readings(df2,"Banana3")
+plot_sensor_readings(df1, "Banana2")
+plot_sensor_readings(df2, "Banana3")
 plot_sensor_readings(df3, "Banana4")
 plot_sensor_readings(df4, "Banana5")
 plot_sensor_readings(df5, "Banana6")
 plot_sensor_readings(df6, "Banana7")
 plot_sensor_readings(df7, "Banana8")
+plot_sensor_readings(df8, "Banana9") 
 
 def create_advanced_features(df):
     df_base = df.copy()
@@ -115,7 +121,7 @@ def create_advanced_features(df):
     return df_processed
 
 banana_datasets_fe = []
-for df in [df0, df1, df2, df3, df4]:
+for df in [df0, df1, df2, df3, df4, df5, df6, df7, df8]: 
     banana_datasets_fe.append(create_advanced_features(df))
 
 banana_datasets = banana_datasets_fe
@@ -270,7 +276,7 @@ for model_name, model in models.items():
         plt.tight_layout()
         plt.show()
 
-        if model_name in ['XGBoost', 'Gradient Boosting']:
+        if model_name in ['XGBoost', 'Gradient Boosting', 'Random Forest']:  
             if hasattr(pipeline.named_steps['regressor'], 'feature_importances_'):
                 model_feature_importances = pipeline.named_steps['regressor'].feature_importances_
                 
@@ -302,7 +308,6 @@ for model_name, model in models.items():
 results_df = pd.DataFrame(final_results).sort_values(by='Avg R2 Score', ascending=False)
 print("\nLOBO Cross-Validation Results (Leave-One-Banana-Out) with Advanced Features & Visualizations:")
 print(results_df)
-
 
 r2_df = pd.DataFrame(all_r2_scores)
 plt.figure(figsize=(12, 7))
